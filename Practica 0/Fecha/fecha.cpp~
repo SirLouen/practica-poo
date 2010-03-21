@@ -169,7 +169,7 @@ Fecha Fecha::operator -= (int num)
 	return *this;
 }
 
-Fecha Fecha::operator ++(int)
+Fecha Fecha::operator ++ (int)
 {
 	Fecha f(*this);
 	
@@ -178,7 +178,7 @@ Fecha Fecha::operator ++(int)
 	
 }
 
-Fecha Fecha::operator --(int)
+Fecha Fecha::operator -- (int)
 {
 	Fecha f(*this);
 	
