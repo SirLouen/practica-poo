@@ -119,19 +119,19 @@ FCT_BGN() {
     }
     FCT_TEST_END();
 
-    FCT_TEST_BGN(Suma de dias - dias + fecha) {
-      const Fecha f(30, 4, 2003);
-      const Fecha g(10 + f);
-      chk_eq_fecha(g, 10, 5, 2003);
-    }
-    FCT_TEST_END();
+//     FCT_TEST_BGN(Suma de dias - dias + fecha) {
+//       const Fecha f(30, 4, 2003);
+//       const Fecha g(10 + f);
+//       chk_eq_fecha(g, 10, 5, 2003);
+//     }
+//     FCT_TEST_END();
 
-    FCT_TEST_BGN(Resta de dias - fecha - dias) {
-      const Fecha f(1, 4, 2008);
-      const Fecha g(f - 10);
-      chk_eq_fecha(g, 22, 3, 2008);
-    }
-    FCT_TEST_END();
+//     FCT_TEST_BGN(Resta de dias - fecha - dias) {
+//       const Fecha f(1, 4, 2008);
+//       const Fecha g(f - 10);
+//       chk_eq_fecha(g, 22, 3, 2008);
+//     }
+//     FCT_TEST_END();
 
     FCT_TEST_BGN(Suma con asignacion) {
       Fecha f(5, 5, 2005);

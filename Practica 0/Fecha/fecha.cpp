@@ -37,7 +37,7 @@ Fecha::Fecha (int dia, int mes, int anno) throw (Fecha::Invalida)
 	int d,m,a;
 	time_t tc;
 	time(&tc);	
-
+	
 	struct tm* td;
 	td = localtime(&tc);
 	
@@ -55,7 +55,7 @@ Fecha::Fecha (int dia, int mes, int anno) throw (Fecha::Invalida)
 		a = td->tm_year+1900;
 	else
 		a = anno;
-	
+		
 	// comprobacion de fecha correcta
 	if(fechainvalida(d,m,a))
 		throw Invalida("Error Fecha::Fecha");
@@ -113,47 +113,59 @@ Fecha::Fecha (const char *fecha) throw (Invalida)
 	}
 }
 
-Fecha Fecha::operator +(int num)
+Fecha operator +(Fecha f, int num)
 {
 	time_t tc;
 	time(&tc);
 	struct tm* td = localtime(&tc);
 	
-	Fecha f = *this;
-	
-	td->tm_mday = f.dia_;
-	td->tm_mon = f.mes_;
-	td->tm_year = f.anno_;
+	td->tm_mday = f.dia();
+	td->tm_mon = f.mes() - 1;
+	td->tm_year = f.anno() - 1900;
 	
 	td->tm_mday = td->tm_mday  + num;
-	mktime(td);
+	tc = mktime(td);
+	td = localtime(&tc);
 	
-	f.dia_ = td->tm_mday;
-	f.mes_ = td->tm_mon;
-	f.anno_ = td->tm_year;
+	
+	f.dia() = td->tm_mday;
+	f.mes() = td->tm_mon + 1;
+	f.anno() = td->tm_year + 1900;
+		
+	return f;
+}
+
+Fecha operator -(Fecha f, int num)
+{
+	time_t tc;
+	time(&tc);
+	struct tm* td = localtime(&tc);
+	
+	td->tm_mday = f.dia();
+	td->tm_mon = f.mes() - 1;
+	td->tm_year = f.anno() - 1900;
+	
+	td->tm_mday = td->tm_mday  - num;
+	tc = mktime(td);
+	td = localtime(&tc);
+	
+	
+	f.dia() = td->tm_mday;
+	f.mes() = td->tm_mon + 1;
+	f.anno() = td->tm_year + 1900;
 	
 	return f;
 }
 
-Fecha Fecha::operator -(int num)
+Fecha operator +(int num, Fecha f)
 {
-	time_t tc;
-	time(&tc);
-	struct tm* td = localtime(&tc);
-	
-	Fecha f = *this;
-	
-	td->tm_mday = f.dia_;
-	td->tm_mon = f.mes_;
-	td->tm_year = f.anno_;
-	
-	td->tm_mday = td->tm_mday  - num;
-	mktime(td);
-	
-	f.dia_ = td->tm_mday;
-	f.mes_ = td->tm_mon;
-	f.anno_ = td->tm_year;
-	
+	f = f + num;
+	return f;
+}
+
+Fecha operator -(int num, Fecha f)
+{
+	f = f - num;
 	return f;
 }
 	
@@ -187,13 +199,13 @@ Fecha Fecha::operator --(int)
 	
 }
 
-Fecha Fecha::operator -- ()
+Fecha Fecha::operator --()
 {
 	*this = *this - 1;
 	return *this;
 }
 
-Fecha Fecha::operator ++ ()
+Fecha Fecha::operator ++()
 {
 	*this = *this + 1;
 	return *this;
@@ -207,7 +219,7 @@ Fecha::operator const char* () const
 	int diasemana;
 	char* cadenafecha;
 	cadenafecha = (char*)malloc(sizeof(char)*50);
-	char diasem[15];
+	char diasem[15], mescadena[15];
 	
 	Fecha f = *this;
 	
@@ -220,60 +232,101 @@ Fecha::operator const char* () const
 	diasemana = td->tm_wday;
 	
 	switch (diasemana)
-    {
-           case 1:
-           {sprintf(diasem, "lunes");}
-           break;
-           case 2:
-           {sprintf(diasem, "martes");}
-           break;
-           case 3:
-           {sprintf(diasem, "miercoles");}
-           break;
-           case 4:
-           {sprintf(diasem, "jueves");}
-           break;
-           case 5:
-           {sprintf(diasem, "viernes");}
-           break;
-           case 6:
-           {sprintf(diasem, "sabado");}
-           break;
-           case 0:
-           {sprintf(diasem, "domingo");}       
+	{
+		case 1:
+		{sprintf(diasem, "lunes");}
+		break;
+		case 2:
+		{sprintf(diasem, "martes");}
+		break;
+		case 3:
+		{sprintf(diasem, "miercoles");}
+		break;
+		case 4:
+		{sprintf(diasem, "jueves");}
+		break;
+		case 5:
+		{sprintf(diasem, "viernes");}
+		break;
+		case 6:
+		{sprintf(diasem, "sabado");}
+		break;
+		case 0:
+		{sprintf(diasem, "domingo");}       
     }
 	
-	sprintf(cadenafecha,"%s %d de %d de %d",diasem,dia_,mes_,anno_);
+	switch (mes_)
+	{
+		case 1:
+		{sprintf(mescadena, "enero");}
+		break;
+		case 2:
+		{sprintf(mescadena, "febrero");}
+		break;
+		case 3:
+		{sprintf(mescadena, "marzo");}
+		break;
+		case 4:
+		{sprintf(mescadena, "abril");}
+		break;
+		case 5:
+		{sprintf(mescadena, "mayo");}
+		break;
+		case 6:
+		{sprintf(mescadena, "junio");}
+		break;
+		case 7:
+		{sprintf(mescadena, "julio");} 
+		break;
+		case 8:
+		{sprintf(mescadena, "agosto");}
+		break;
+		case 9:
+		{sprintf(mescadena, "septiembre");}
+		break;
+		case 10:
+		{sprintf(mescadena, "octubre");}
+		break;
+		case 11:
+		{sprintf(mescadena, "noviembre");}
+		break;
+		case 12:
+		{sprintf(mescadena, "diciembre");}
+		break; 
+	}
+		   
+	
+	sprintf(cadenafecha,"%s %d de %s de %d",diasem,dia_,mescadena,anno_);
 
 	return cadenafecha; 
 }
 	
-bool Fecha::operator ==(Fecha& f) const
+bool Fecha::operator ==(const Fecha& f) const
 {
-	return f.anno_ == (*this).anno_ && f.mes_ == (*this).mes_ && f.dia_ == (*this).dia_;
+	return (f.anno_ == (*this).anno_) && (f.mes_ == (*this).mes_) && (f.dia_ == (*this).dia_);
 }
 
-bool Fecha::operator !=(Fecha& f) const
+bool Fecha::operator !=(const Fecha& f) const
 {
-	return f.anno_ != (*this).anno_ && f.mes_ != (*this).mes_ && f.dia_ != (*this).dia_;
+	return (f.anno_ != (*this).anno_) && (f.mes_ != (*this).mes_) && (f.dia_ != (*this).dia_);
 }
 
-bool Fecha::operator >=(Fecha& f) const
+bool Fecha::operator >=(const Fecha& f) const
 {
-	return (f.anno_ >= (*this).anno_) || (f.anno_ == (*this).anno_ && f.mes_ >= (*this).mes_) || (f.anno_ == (*this).anno_ && f.mes_ == (*this).mes_ && f.dia_ >= (*this).dia_);
+	return ((*this).anno_ >= f.anno_) || ((f.anno_ == (*this).anno_) && ((*this).mes_ >= f.mes_)) || ((f.anno_ == (*this).anno_) && (f.mes_ == (*this).mes_) && ((*this).dia_ >= f.dia_));
 }
 
-bool Fecha::operator <=(Fecha& f) const
+bool Fecha::operator <=(const Fecha& f) const
 {
-	return (f.anno_ <= (*this).anno_) || (f.anno_ == (*this).anno_ && f.mes_ <= (*this).mes_) || (f.anno_ == (*this).anno_ && f.mes_ == (*this).mes_ && f.dia_ <= (*this).dia_);
+	return ((*this).anno_  <= f.anno_) || ((f.anno_ == (*this).anno_) && ((*this).mes_ <= f.mes_)) || ((f.anno_ == (*this).anno_) && (f.mes_ == (*this).mes_) && ((*this).dia_ <= f.dia_));
 }
 
-bool Fecha::operator >(Fecha& f) const
+bool Fecha::operator >(const Fecha& f) const
 {
-	return (f.anno_ > (*this).anno_) || (f.anno_ == (*this).anno_ && f.mes_ > (*this).mes_) || (f.anno_ == (*this).anno_ && f.mes_ == (*this).mes_ && f.dia_ > (*this).dia_);
+	return ((*this).anno_ > f.anno_)  || ((f.anno_ == (*this).anno_) && ((*this).mes_ > f.mes_ )) || ((f.anno_ == (*this).anno_) && (f.mes_ == (*this).mes_) && ((*this).dia_ > f.dia_));
 }
 
-bool Fecha::operator <(Fecha& f) const
+bool Fecha::operator <(const Fecha& f) const
 {
-	return (f.anno_ < (*this).anno_) || (f.anno_ == (*this).anno_ && f.mes_ < (*this).mes_) || (f.anno_ == (*this).anno_ && f.mes_ == (*this).mes_ && f.dia_ < (*this).dia_);
+	return ((*this).anno_ < f.anno_) || ((f.anno_ == (*this).anno_) && ((*this).mes_ < f.mes_)) || ((f.anno_ == (*this).anno_) && (f.mes_ == (*this).mes_) && ((*this).dia_ < f.dia_));
 }

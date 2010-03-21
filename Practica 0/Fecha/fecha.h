@@ -28,9 +28,10 @@ class Fecha
 		int mes() const { return mes_; }
 		int anno() const { return anno_; }
 		
-		// Metodos de incremento/decremento de dias
-		Fecha operator +(int num);
-		Fecha operator -(int num);
+		// Metodos modificadores de dia, mes y año
+		int& dia() { return dia_; }
+		int& mes() { return mes_; }
+		int& anno() { return anno_; }
 		
 		// Metodos de incremento/decremento con asignacion de dias
 		Fecha operator +=(int num);
@@ -48,19 +49,29 @@ class Fecha
 		operator const char* () const;
 		
 		// Metodos de comparacion
-		bool operator ==(Fecha& f) const;
-		bool operator !=(Fecha& f) const;
-		bool operator >=(Fecha& f) const;
-		bool operator <=(Fecha& f) const;
-		bool operator >(Fecha& f) const;
-		bool operator <(Fecha& f) const;
+		bool operator ==(const Fecha& f) const;
+		bool operator !=(const Fecha& f) const;
+		bool operator >=(const Fecha& f) const;
+		bool operator <=(const Fecha& f) const;
+		bool operator >(const Fecha& f) const;
+		bool operator <(const Fecha& f) const;
+		
+		friend Fecha operator +(Fecha f, int num);
+		friend Fecha operator -(Fecha f, int num);
+		friend Fecha operator +(int num, Fecha f);
+		friend Fecha operator -(int num, Fecha f);
+		
 		
 		
 	private:
 		int dia_,mes_,anno_;
 };
 
-
+// Metodos de incremento/decremento de dias
+	//	Fecha operator +(Fecha &f, int num);
+	//	Fecha operator -(Fecha &f, int num);
+	//	Fecha operator +(int num, Fecha &f);
+	//	Fecha operator -(int num, Fecha &f);
 
 
 #endif
