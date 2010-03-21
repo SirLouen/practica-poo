@@ -1,0 +1,15 @@
+Consideraciones
+
+1. En operador de asignacion y constructor por copia: REDUNDANTE
+2. Operadores friend
+3. Operadores Comparadores, tienen dos argumentos, ¿fuera de la clase mejor?
+4. Valen las Funciones de String para cadena?
+
+5. Mejorar en Fecha Fecha->cadena bajo nivel
+6. Revisar cadenabajo nivel -> Fecha
+
+7. Ultima prueba de cadena, unsigned int en tamaño
+8. Revisar la reserva de memoria de todos los constructores de Cadena
+
+9. Revisar el make: Se elimina la dependencia circular prueba-auto <- prueba-auto.  
+
