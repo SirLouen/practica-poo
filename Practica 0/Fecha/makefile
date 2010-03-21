@@ -38,7 +38,7 @@ fecha.o: fecha.cpp fecha.h
 # Limpieza del directorio.
 
 clean:
-	$(RM) $(RMFLAGS) $(EXES) $(OBJS) *~
+	$(RM) $(RMFLAGS) $(EXES) $(EXES2) $(OBJS) $(OBJS2) *~
 
 clean-all: clean
 	$(RM) $(RMFLAGS) $(TIEMPOS) $(GRAFICAS)
