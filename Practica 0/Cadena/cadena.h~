@@ -43,7 +43,7 @@ class Cadena
 		char at(unsigned int i) const throw(std::out_of_range);
 		char& at(unsigned int i) throw(std::out_of_range);
 		
-		const char* subcadena(int pos, unsigned int tam) throw(std::out_of_range);
+		const char* subcadena(int pos, int tam) throw(std::out_of_range);
 		
 		~Cadena(){ delete[] cadena_; }
 

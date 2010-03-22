@@ -141,9 +141,10 @@ const char* Cadena::subcadena(int pos, unsigned int tam) throw(std::out_of_range
 	if (tam < 0)
 		throw std::out_of_range("subcadena(): Fuera de Rango");
 	
-	else if (pos < 0 || pos+tam >= (*this).tam_)
+	if (pos < 0 || pos+tam >= (*this).tam_)
 		throw std::out_of_range("subcadena(): Fuera de Rango");
-		
+	
+	
 	else
 	{
 		char* cadena;
