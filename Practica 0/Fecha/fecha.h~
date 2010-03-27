@@ -48,30 +48,29 @@ class Fecha
 		// Conversion de Fecha a cadena de bajo nivel
 		operator const char* () const;
 		
-		// Metodos de comparacion
-		bool operator ==(const Fecha& f) const;
-		bool operator !=(const Fecha& f) const;
-		bool operator >=(const Fecha& f) const;
-		bool operator <=(const Fecha& f) const;
-		bool operator >(const Fecha& f) const;
-		bool operator <(const Fecha& f) const;
+		Fecha operator +(int num);
+		//Fecha& operator -(int num);
 		
-		friend Fecha operator +(Fecha f, int num)
-		friend Fecha operator -(Fecha f, int num);
 		friend Fecha operator +(int num, Fecha f);
 		friend Fecha operator -(int num, Fecha f);
-		
-		
+
 		
 	private:
 		int dia_,mes_,anno_;
 };
 
-// Metodos de incremento/decremento de dias
-	//	Fecha operator +(Fecha &f, int num);
-	//	Fecha operator -(Fecha &f, int num);
-	//	Fecha operator +(int num, Fecha &f);
-	//	Fecha operator -(int num, Fecha &f);
+		// Metodos de incremento/decremento de dias
+		
+		Fecha operator -(Fecha f, int num);
 
+		// Metodos de comparacion
+		// Recordar que estan los parametros cambiados por comodidad al editar las formulas de la implementacion
+		bool operator ==(const Fecha& f, const Fecha& g);
+		bool operator !=(const Fecha& f, const Fecha& g);
+		bool operator >=(const Fecha& g, const Fecha& f);
+		bool operator <=(const Fecha& g, const Fecha& f);
+		bool operator >(const Fecha& g, const Fecha& f);
+		bool operator <(const Fecha& g, const Fecha& f);
 
+	
 #endif

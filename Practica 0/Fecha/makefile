@@ -16,9 +16,7 @@ OBJS2 = pruebafecha.o fecha.o
 
 # Se obtienen los ejecutables directamente
 
-all: $(EXES2)
-
-prueba-auto: $(EXES)
+all: $(EXES)
 
 # Obtencion de los ejecutables.
 

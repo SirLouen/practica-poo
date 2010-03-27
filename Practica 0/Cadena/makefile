@@ -16,9 +16,7 @@ OBJS2 = pruebacadena.o cadena.o
 
 # Se obtienen los ejecutables directamente
 
-all: $(EXES2)
-
-prueba-auto: $(EXES)
+all: $(EXES)
 
 # Obtencion de los ejecutables.
 

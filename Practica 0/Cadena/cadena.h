@@ -27,13 +27,6 @@ class Cadena
 		// Sobrecarga del operador de suma para la concatenacion
 		friend Cadena operator +(const Cadena& a, const Cadena& b);
 		
-		// Sobrecarga de los operadores de comparacion
-		bool operator >=(const Cadena &otra);
-		bool operator <=(const Cadena &otra);
-		bool operator >(const Cadena &otra);
-		bool operator <(const Cadena &otra);
-		bool operator ==(const Cadena &otra);
-		bool operator !=(const Cadena &otra);
 		
 		// Sobrecarga del operador de indice, observador y modificador
 		char operator[](int i) const;
@@ -43,7 +36,7 @@ class Cadena
 		char at(unsigned int i) const throw(std::out_of_range);
 		char& at(unsigned int i) throw(std::out_of_range);
 		
-		const char* subcadena(int pos, unsigned int tam) throw(std::out_of_range);
+		const char* subcadena(unsigned int pos, unsigned int tam) throw(std::out_of_range);
 		
 		~Cadena(){ delete[] cadena_; }
 
@@ -52,5 +45,14 @@ class Cadena
 		char *cadena_;
 		unsigned int tam_;
 };
+
+		// Sobrecarga de los operadores de comparacion
+		
+		bool operator >=(const Cadena &una, const Cadena &otra);
+		bool operator <=(const Cadena &una, const Cadena &otra);
+		bool operator >(const Cadena &una, const Cadena &otra);
+		bool operator <(const Cadena &una, const Cadena &otra);
+		bool operator ==(const Cadena &una, const Cadena &otra);
+		bool operator !=(const Cadena &una, const Cadena &otra);
 
 #endif
