@@ -75,71 +75,73 @@ Fecha::Fecha (const char *fecha) throw (Invalida)
 	}
 }
 
-Fecha operator +(Fecha f, int num)
+Fecha Fecha::operator +(int num) const
 {
 	time_t tc;
 	time(&tc);
 	struct tm* td = localtime(&tc);
 	
-	td->tm_mday = f.dia();
-	td->tm_mon = f.mes() - 1;
-	td->tm_year = f.anno() - 1900;
+	Fecha h(*this);
+	
+	td->tm_mday = h.dia_;
+	td->tm_mon = h.mes_ - 1;
+	td->tm_year = h.anno_ - 1900;
 	
 	td->tm_mday = td->tm_mday + num;
 	tc = mktime(td);
 	td = localtime(&tc);
 	
-	//Fecha *h=new Fecha;
+	h.dia_ = td->tm_mday;
+	h.mes_ = td->tm_mon + 1;
+	h.anno_ = td->tm_year + 1900;
 	
-	f.dia() = td->tm_mday;
-	f.mes() = td->tm_mon + 1;
-	f.anno() = td->tm_year + 1900;
-	
-	return f;
+	return h;
 }
 
-Fecha operator -(Fecha f, int num)
+Fecha Fecha::operator -(int num) const
 {
 	time_t tc;
 	time(&tc);
 	struct tm* td = localtime(&tc);
 	
-	td->tm_mday = f.dia();
-	td->tm_mon = f.mes() - 1;
-	td->tm_year = f.anno() - 1900;
+	Fecha h(*this);
+	
+	td->tm_mday = h.dia_;
+	td->tm_mon = h.mes_ - 1;
+	td->tm_year = h.anno_ - 1900;
 	
 	td->tm_mday = td->tm_mday - num;
 	tc = mktime(td);
 	td = localtime(&tc);
 	
-	//Fecha *h=new Fecha;
+	h.dia_ = td->tm_mday;
+	h.mes_ = td->tm_mon + 1;
+	h.anno_ = td->tm_year + 1900;
 	
-	f.dia() = td->tm_mday;
-	f.mes() = td->tm_mon + 1;
-	f.anno() = td->tm_year + 1900;
-	
-	return f;
+	return h;
 }
 
-Fecha operator +(int num, Fecha f)
+Fecha operator +(int num, const Fecha& f)
 {
-	f = f + num;
-	return f;
+	Fecha h = f ;
+	h += num;
+	return h;
 }
 
-Fecha operator -(int num, Fecha f)
+Fecha operator -(int num, const Fecha& f)
 {
-	f = f - num;
-	return f;
+	Fecha h = f ;
+	h -= num;
+	return h;
 }
 	
-Fecha Fecha::operator += (int num)
+Fecha& Fecha::operator += (int num)
 {
 	*this = *this + num;
 	return *this;
 }
 
-Fecha Fecha::operator -= (int num)
+Fecha& Fecha::operator -= (int num)
 {
 	*this = *this - num;
 	return *this;
@@ -166,13 +168,13 @@ Fecha Fecha::operator --(int)
 }
 
 //Predecremento
-Fecha Fecha::operator --()
+Fecha& Fecha::operator --()
 {
 	*this = *this - 1;
 	return *this;
 }
 //Preincremento
-Fecha Fecha::operator ++()
+Fecha& Fecha::operator ++()
 {
 	*this = *this + 1;
 	return *this;

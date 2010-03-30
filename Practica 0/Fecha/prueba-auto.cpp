@@ -1,7 +1,6 @@
 #include "fecha.h"
 #include "fct.h"
 #include <ctime>
-#include <iostream>
 using namespace std;
 
 #define fecha_is_eq(f, d, m, y)\
@@ -36,20 +35,44 @@ FCT_BGN() {
     }
     FCT_TEST_END();
 
-    FCT_TEST_BGN(Ctor: dia - mes) {
+    FCT_TEST_BGN(Ctor: dia - mes sin ceros) {
       const Fecha f(3, 7);
       chk_eq_fecha(f, 3, 7, annoSistema);
     }
     FCT_TEST_END();
 
-    FCT_TEST_BGN(Ctor: dia) {
+    FCT_TEST_BGN(Ctor: dia - mes con ceros) {
+      const Fecha f(3, 7, 0);
+      chk_eq_fecha(f, 3, 7, annoSistema);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Ctor: dia sin ceros) {
       const Fecha f(2);
+      chk_eq_fecha(f, 2, mesSistema, annoSistema);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Ctor: dia con un cero) {
+      const Fecha f(2, 0);
+      chk_eq_fecha(f, 2, mesSistema, annoSistema);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Ctor: dia con dos ceros) {
+      const Fecha f(2, 0, 0);
       chk_eq_fecha(f, 2, mesSistema, annoSistema);
     }
     FCT_TEST_END();
 
     FCT_TEST_BGN(Ctor: sin argumentos) {
       const Fecha f;
+      chk_eq_fecha(f, diaSistema, mesSistema, annoSistema);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Ctor: todo ceros) {
+      const Fecha f(0, 0, 0);
       chk_eq_fecha(f, diaSistema, mesSistema, annoSistema);
     }
     FCT_TEST_END();
@@ -111,6 +134,38 @@ FCT_BGN() {
     }
     FCT_TEST_END();
 
+    FCT_TEST_BGN(Preincremento - asociatividad) {
+      Fecha f(31, 3, 2010);
+      Fecha g(++++f);
+      chk_eq_fecha(f, 2, 4, 2010);
+      chk_eq_fecha(g, 2, 4, 2010);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Postincremento) {
+      Fecha f(31, 3, 2010);
+      Fecha g(f++);
+      chk_eq_fecha(f, 1, 4, 2010);
+      chk_eq_fecha(g, 31, 3, 2010);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Predecremento) {
+      Fecha f(1, 1, 2010);
+      Fecha g(--f);
+      chk_eq_fecha(f, 31, 12, 2009);
+      chk_eq_fecha(g, 31, 12, 2009);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Predecremento - asociatividad) {
+      Fecha f(1, 1, 2010);
+      Fecha g(----f);
+      chk_eq_fecha(f, 30, 12, 2009);
+      chk_eq_fecha(g, 30, 12, 2009);
+    }
+    FCT_TEST_END();
+
     FCT_TEST_BGN(Postdecremento) {
       Fecha f(1, 1, 2010);
       Fecha g(f--);
@@ -140,10 +195,24 @@ FCT_BGN() {
     }
     FCT_TEST_END();
 
+    FCT_TEST_BGN(Suma con asignacion - asociatividad) {
+      Fecha f(5, 5, 2005);
+      (f += 3) += 2;
+      chk_eq_fecha(f, 10, 5, 2005);
+    }
+    FCT_TEST_END();
+
     FCT_TEST_BGN(Resta con asignacion) {
       Fecha f(2, 7, 2010);
       f -= 2;
       chk_eq_fecha(f, 30, 6, 2010);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Resta con asignacion - asociatividad) {
+      Fecha f(2, 7, 2010);
+      (f -= 2) -= 5;
+      chk_eq_fecha(f, 25, 6, 2010);
     }
     FCT_TEST_END();
 
@@ -152,6 +221,15 @@ FCT_BGN() {
       Fecha g(3, 4, 2005);
       g = f;
       chk_eq_fecha(g, 1, 1, 2001);
+    }
+    FCT_TEST_END();
+
+    FCT_TEST_BGN(Asignacion entre fechas - asociatividad) {
+      Fecha f(1, 1, 2001);
+      Fecha g(3, 4, 2005);
+      Fecha h(g);
+      h = g = f;
+      chk_eq_fecha(h, 1, 1, 2001);
     }
     FCT_TEST_END();
 

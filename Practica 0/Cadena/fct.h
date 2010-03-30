@@ -2480,7 +2480,7 @@ fct_standard_logger__on_fct_end(fct_logger_i *logger_, fctkern_t const *nk)
     num_passed = fctkern__tst_cnt_passed(nk);
 
     printf(
-        "%s (%lu/%lu tests",
+        "%s (%u/%u tests",
         (is_success) ? "PASSED" : "FAILED",
         num_passed,
         num_tests

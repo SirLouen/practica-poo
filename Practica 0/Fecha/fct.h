@@ -2449,8 +2449,8 @@ fct_standard_logger__on_fct_end(fct_logger_i *logger_, fctkern_t const *nk)
     fct_standard_logger_t *logger = (fct_standard_logger_t*)logger_;
     nbool_t is_success =1;
     double elasped_time =0;
-    int num_tests =0;
-    int num_passed =0;
+    size_t num_tests =0;
+    size_t num_passed =0;
 
     fct_timer__stop(&(logger->timer));
 
@@ -2479,7 +2479,12 @@ fct_standard_logger__on_fct_end(fct_logger_i *logger_, fctkern_t const *nk)
     num_tests = fctkern__tst_cnt(nk);
     num_passed = fctkern__tst_cnt_passed(nk);
 
-    printf("%s (%d/%d tests",(is_success) ? "PASSED" : "FAILED", num_passed,num_tests);
+    printf(
+        "%s (%u/%u tests",
+        (is_success) ? "PASSED" : "FAILED",
+        num_passed,
+        num_tests
+    );
 
     elasped_time = fct_timer__duration(&(logger->timer));
     if ( elasped_time > 0.0000001 )

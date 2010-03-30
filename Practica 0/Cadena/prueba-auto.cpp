@@ -221,6 +221,17 @@ FCT_BGN() {
       }
     }
     FCT_TEST_END();
+
+    FCT_TEST_BGN(Subcadena: tamanyo excesivo) {
+      Cadena a("0123456789");
+      try {
+        a.subcadena(9,1000);
+        fct_chk(!"Se esperaba excepción");
+      } catch (out_of_range) {
+        fct_chk(true);
+      }
+    }
+    FCT_TEST_END();
   };
   FCT_SUITE_END();
 }

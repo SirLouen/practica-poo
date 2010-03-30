@@ -34,19 +34,23 @@ class Fecha
 		int& anno() { return anno_; }
 		
 		// Metodos de incremento/decremento con asignacion de dias
-		Fecha operator +=(int num);
-		Fecha operator -=(int num);
+		Fecha& operator +=(int num);
+		Fecha& operator -=(int num);
 		
 		// Metodos de incremento/decremento unario sufijo
 		Fecha operator ++ (int);
 		Fecha operator -- (int);
 		
 		// Metodos de incremento/decremento unario perfijo
-		Fecha operator ++ ();
-		Fecha operator -- ();
+		Fecha& operator ++ ();
+		Fecha& operator -- ();
 		
 		// Conversion de Fecha a cadena de bajo nivel
 		operator const char* () const;
+		
+		// Metodos de incremento/decremento de dias
+		Fecha operator +(int num) const;
+		Fecha operator -(int num) const;
 	
 		
 	private:
@@ -54,10 +58,8 @@ class Fecha
 };
 
 		// Metodos de incremento/decremento de dias
-		Fecha operator +(Fecha f, int num);
-		Fecha operator -(Fecha f, int num);
-		Fecha operator +(int num, Fecha f);
-		Fecha operator -(int num, Fecha f);
+		Fecha operator +(int num, const Fecha& f);
+		Fecha operator -(int num, const Fecha& f);
 
 		// Metodos de comparacion
 		// Recordar que estan los parametros cambiados por comodidad al editar las formulas de la implementacion
