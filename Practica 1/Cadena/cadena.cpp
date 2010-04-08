@@ -67,10 +67,10 @@ Cadena& Cadena::operator +=(const Cadena &otra)
 
 Cadena operator +(const Cadena& a, const Cadena& b)
 {	
-	int tam = a.tam_ + b.tam_ + 1;
 	Cadena cadena;
+	cadena.tam_ = a.tam_ + b.tam_;
 	
-	cadena.cadena_ = new char[tam];
+	cadena.cadena_ = new char[cadena.tam_ + 1];
 	strcpy(cadena.cadena_, a.cadena_);
 	strcat(cadena.cadena_, b.cadena_);
 	
@@ -141,7 +141,7 @@ const char* Cadena::subcadena(unsigned int pos, unsigned int tam) throw(std::out
 	else
 	{
 		char* cadena;
-		cadena = new char[tam];
+		cadena = new char[tam+1];
 	
 		for (unsigned int i = 0; i < tam; i++) 
 			cadena[i] = (*this).cadena_[i+pos];

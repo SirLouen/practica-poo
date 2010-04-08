@@ -4,7 +4,7 @@
 
 Cadena::Cadena(int tam, char cadena) : tam_(tam)
 {
-	cadena_ = new char[tam];
+	cadena_ = new char[tam+1];
 	for (int i = 0; i < tam; ++i) 
 		cadena_[i] = cadena;
 	
@@ -14,14 +14,14 @@ Cadena::Cadena(int tam, char cadena) : tam_(tam)
 Cadena::Cadena(const Cadena& otra)
 {
 	tam_ = otra.tam_;
-	cadena_ = new char[tam_];
+	cadena_ = new char[tam_+1];
 	strcpy(cadena_, otra.cadena_);
 }
 
 Cadena::Cadena (const char *cadena)
 {
 	tam_ = strlen(cadena);
-	cadena_ = new char[tam_];
+	cadena_ = new char[tam_+1];
 	strcpy((*this).cadena_, cadena);
 }
 
@@ -30,7 +30,7 @@ Cadena& Cadena::operator =(const Cadena& otra)
 	if (cadena_ != otra.cadena_)
 	{
 		(*this).tam_ = otra.tam_;
-		(*this).cadena_ = new char[(*this).tam_];
+		(*this).cadena_ = new char[(*this).tam_+1];
 		strcpy((*this).cadena_,otra.cadena_);
 	}
 	
@@ -40,7 +40,7 @@ Cadena& Cadena::operator =(const Cadena& otra)
 Cadena& Cadena::operator =(const char *cadena)
 {
 	(*this).tam_ = strlen(cadena);
-	(*this).cadena_ = new char[(*this).tam_];
+	(*this).cadena_ = new char[(*this).tam_+1];
 	strcpy((*this).cadena_,cadena);
 	
 	return (*this);
@@ -49,7 +49,7 @@ Cadena& Cadena::operator =(const char *cadena)
 Cadena& Cadena::operator +=(const Cadena &otra)
 {
 	// Creamos valores temporales para la concatenacion
-	int tam = (*this).tam_ + otra.tam_ - 1;
+	int tam = (*this).tam_ + otra.tam_ + 1;
 	char* cadena = new char[tam];
 	
 	// Creamos una cadena temporal
@@ -67,7 +67,7 @@ Cadena& Cadena::operator +=(const Cadena &otra)
 
 Cadena operator +(const Cadena& a, const Cadena& b)
 {	
-	int tam = a.tam_ + b.tam_ - 1;
+	int tam = a.tam_ + b.tam_ + 1;
 	Cadena cadena;
 	
 	cadena.cadena_ = new char[tam];
@@ -141,7 +141,7 @@ const char* Cadena::subcadena(unsigned int pos, unsigned int tam) throw(std::out
 	else
 	{
 		char* cadena;
-		cadena = new char[tam];
+		cadena = new char[tam+1];
 	
 		for (unsigned int i = 0; i < tam; i++) 
 			cadena[i] = (*this).cadena_[i+pos];
